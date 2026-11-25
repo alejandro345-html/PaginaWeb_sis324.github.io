@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TechStore - Tienda de componentes y tecnología">
+  <title>TechStore | Tecnología que inspira</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="#" data-section="inicio" aria-label="TechStore inicio">
+        <span class="brand-mark">T</span><span>Tech<span class="brand-accent">Store</span></span>
+      </a>
+      <button class="icon-button menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
+      <nav class="main-nav" id="mainNav">
+        <button class="nav-link active" data-section="inicio">Inicio</button>
+        <button class="nav-link" data-section="productos">Productos</button>
+        <div class="nav-group" id="clientMenu">
+          <button class="nav-link" data-section="carrito">Carrito <span class="nav-count" id="cartCount">0</span></button>
+          <button class="nav-link" data-section="mis-pedidos">Mis pedidos</button>
+          <button class="nav-link" data-section="mi-cuenta">Mi cuenta</button>
+        </div>
+        <div class="nav-group admin-nav hidden" id="adminMenu">
+          <button class="nav-link" data-section="dashboard">Panel</button>
+          <button class="nav-link" data-section="productos-admin">Productos</button>
+          <button class="nav-link" data-section="inventario">Inventario</button>
+          <button class="nav-link" data-section="pedidos-admin">Pedidos</button>
+          <button class="nav-link" data-section="ventas">Ventas</button>
+          <button class="nav-link" data-section="clientes">Clientes</button>
+          <button class="nav-link" data-section="reportes">Reportes</button>
+        </div>
+      </nav>
+      <div class="header-actions">
+        <span class="user-greeting hidden" id="userName"></span>
+        <button class="button button-ghost" id="loginBtn">Ingresar</button>
+        <button class="button button-primary hidden" id="logoutBtn">Salir</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="section active" id="inicio">
+        <div class="hero">
+          <div class="hero-content">
+            <span class="eyebrow"><span class="pulse"></span> TECNOLOGÍA · RENDIMIENTO · INNOVACIÓN</span>
+            <h1>Tu próximo nivel<br><span>empieza aquí.</span></h1>
+            <p>Encuentra los componentes y accesorios que necesitas para llevar tu setup mucho más lejos.</p>
+            <div class="hero-actions">
+              <button class="button button-primary button-large" data-section="productos">Explorar productos <span>→</span></button>
+              <span class="hero-note">Calidad que se siente. Tecnología que inspira.</span>
+            </div>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <div class="chip-card"><span class="chip-symbol">⌘</span><strong>TECH</strong><small>PERFORMANCE</small></div>
+            <div class="floating-tag tag-one">⚡ Alto rendimiento</div>
+            <div class="floating-tag tag-two">◈ Tu setup ideal</div>
+          </div>
+        </div>
+        <div class="section-heading">
+          <div><span class="eyebrow">SELECCIÓN TECHSTORE</span><h2>Productos destacados</h2></div>
+          <button class="text-button" data-section="productos">Ver catálogo completo →</button>
+        </div>
+        <div class="product-grid" id="featuredGrid"></div>
+        <div class="benefits-grid">
+          <article class="benefit-card"><span>⌁</span><div><h3>Productos seleccionados</h3><p>Componentes y accesorios para cada necesidad.</p></div></article>
+          <article class="benefit-card"><span>▣</span><div><h3>Compra sencilla</h3><p>Explora, agrega al carrito y realiza tu pedido.</p></div></article>
+          <article class="benefit-card"><span>↗</span><div><h3>Atención cercana</h3><p>Tu experiencia es nuestra prioridad.</p></div></article>
+        </div>
+      </section>
+
+      <section class="section" id="productos">
+        <div class="page-heading"><div><span class="eyebrow">CATÁLOGO</span><h1>Encuentra tu tecnología</h1><p>Explora nuestros productos disponibles.</p></div></div>
+        <div class="toolbar">
+          <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Buscar productos..."></label>
+          <select id="categoryFilter" class="field-control"><option value="">Todas las categorías</option></select>
+          <select id="sortFilter" class="field-control"><option value="default">Ordenar por</option><option value="price-asc">Menor precio</option><option value="price-desc">Mayor precio</option><option value="name">Nombre</option></select>
+        </div>
+        <div class="product-grid" id="productGrid"></div>
+        <div class="empty-state hidden" id="productsEmpty">No encontramos productos con esos criterios.</div>
+      </section>
+
+      <section class="section" id="carrito">
+        <div class="page-heading"><div><span class="eyebrow">TU COMPRA</span><h1>Mi carrito</h1><p>Revisa tus productos antes de confirmar el pedido.</p></div></div>
+        <div id="cartContainer"></div>
+      </section>
+
+      <section class="section" id="mis-pedidos">
+        <div class="page-heading"><div><span class="eyebrow">SEGUIMIENTO</span><h1>Mis pedidos</h1><p>Consulta el estado de tus compras.</p></div></div>
+        <div id="myOrdersContainer"></div>
+      </section>
+
+      <section class="section" id="mi-cuenta">
+        <div class="page-heading"><div><span class="eyebrow">PERFIL</span><h1>Mi cuenta</h1><p>Información de tu cuenta TechStore.</p></div></div>
+        <div id="accountContainer"></div>
+      </section>
+
+      <section class="section" id="dashboard">
+        <div class="page-heading"><div><span class="eyebrow">ADMINISTRACIÓN</span><h1>Panel de control</h1><p>Resumen general de tu tienda.</p></div></div>
+        <div id="dashboardContainer"></div>
+      </section>
+
+      <section class="section" id="productos-admin">
+        <div class="page-heading page-heading-row"><div><span class="eyebrow">CATÁLOGO ADMINISTRATIVO</span><h1>Gestionar productos</h1><p>Agrega, modifica o elimina productos.</p></div><button class="button button-primary" id="addProductBtn">＋ Nuevo producto</button></div>
+        <div id="adminProductContainer"></div>
+      </section>
+
+      <section class="section" id="inventario">
+        <div class="page-heading"><div><span class="eyebrow">CONTROL DE EXISTENCIAS</span><h1>Inventario</h1><p>Consulta niveles de stock y movimientos.</p></div></div>
+        <div id="inventoryContainer"></div>
+      </section>
+
+      <section class="section" id="pedidos-admin">
+        <div class="page-heading"><div><span class="eyebrow">OPERACIONES</span><h1>Gestión de pedidos</h1><p>Administra y actualiza los pedidos de clientes.</p></div></div>
+        <div id="ordersContainer"></div>
+      </section>
+
+      <section class="section" id="ventas">
+        <div class="page-heading"><div><span class="eyebrow">RESULTADOS</span><h1>Registro de ventas</h1><p>Historial de pedidos completados.</p></div></div>
+        <div id="salesContainer"></div>
+      </section>
+
+      <section class="section" id="clientes">
+        <div class="page-heading"><div><span class="eyebrow">COMUNIDAD</span><h1>Clientes registrados</h1><p>Consulta las cuentas de clientes.</p></div></div>
+        <div id="customersContainer"></div>
+      </section>
+
+      <section class="section" id="reportes">
+        <div class="page-heading"><div><span class="eyebrow">ANÁLISIS</span><h1>Reportes</h1><p>Indicadores básicos de tu negocio.</p></div></div>
+        <div id="reportsContainer"></div>
+      </section>
+    </main>
+    <footer class="site-footer"><a class="brand" href="#" data-section="inicio"><span class="brand-mark">T</span><span>Tech<span class="brand-accent">Store</span></span></a><span>© 2026 TechStore. Tecnología para todos.</span><span class="footer-status"><i></i> Sistema activo</span></footer>
+  </div>
+
+  <div class="modal-backdrop hidden" id="authModal">
+    <div class="modal modal-small" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="modal-close" data-close-modal aria-label="Cerrar">×</button>
+      <div class="modal-kicker">BIENVENIDO A TECHSTORE</div><h2 id="authTitle">Inicia sesión</h2><p class="modal-description" id="authDescription">Ingresa a tu cuenta para continuar.</p>
+      <form id="loginForm" class="form-stack">
+        <label>Correo electrónico<input class="field-control" type="email" id="loginEmail" required placeholder="tu@correo.com"></label>
+        <label>Contraseña<input class="field-control" type="password" id="loginPassword" required placeholder="Tu contraseña"></label>
+        <button class="button button-primary button-full" type="submit">Ingresar</button>
+      </form>
+      <form id="registerForm" class="form-stack hidden">
+        <label>Nombre completo<input class="field-control" id="registerName" required maxlength="70" placeholder="Tu nombre"></label>
+        <label>Correo electrónico<input class="field-control" type="email" id="registerEmail" required placeholder="tu@correo.com"></label>
+        <label>Contraseña<input class="field-control" type="password" id="registerPassword" required minlength="6" placeholder="Mínimo 6 caracteres"></label>
+        <button class="button button-primary button-full" type="submit">Crear cuenta</button>
+      </form>
+      <p class="modal-switch" id="authSwitch">¿No tienes cuenta? <button type="button" id="showRegister">Regístrate</button></p>
+      <p class="demo-hint">Demo administrador: admin@techstore.com · Admin123!</p>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="formModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="formModalTitle">
+      <button class="modal-close" data-close-modal aria-label="Cerrar">×</button>
+      <div class="modal-kicker" id="formModalKicker">TECHSTORE · FORMULARIO</div>
+      <h2 id="formModalTitle">Formulario</h2><p class="modal-description" id="formModalDescription"></p>
+      <form id="dynamicForm" class="form-stack"></form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="confirmModal">
+    <div class="modal modal-small" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+      <button class="modal-close" data-close-modal aria-label="Cerrar">×</button>
+      <div class="confirm-icon">!</div><h2 id="confirmTitle">¿Confirmar acción?</h2><p class="modal-description" id="confirmMessage"></p>
+      <div class="modal-actions"><button class="button button-ghost" id="cancelConfirm">Cancelar</button><button class="button button-danger" id="acceptConfirm">Confirmar</button></div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
