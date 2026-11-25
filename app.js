@@ -218,19 +218,59 @@ function showToast(message, type = "success", title = null) {
 // ==========================================
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Inicializar interfaz
   updateUserInterface();
   renderProducts();
   renderCart();
   renderMyOrders();
   renderAccount();
 
+  // Configurar funciones
   configureSearch();
   configureAuthentication();
 
-  document.getElementById("menuToggle")?.addEventListener("click", () => {
-    document.querySelector(".navbar")?.classList.toggle("show");
+  // Navegación de todos los botones data-section
+  document.querySelectorAll("[data-section]").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const section = button.dataset.section;
+      if (section) {
+        showSection(section);
+      }
+    });
   });
 
+  // Abrir inicio de sesión
+  document.getElementById("loginBtn")?.addEventListener("click", openLogin);
+
+  // Cerrar sesión
+  document.getElementById("logoutBtn")?.addEventListener("click", logout);
+
+  // Mostrar formulario de registro
+  document
+    .getElementById("showRegister")
+    ?.addEventListener("click", showRegisterForm);
+
+  // Botón para agregar productos
+  document.getElementById("addProductBtn")?.addEventListener("click", () => {
+    openProductForm();
+  });
+
+  // Cerrar ventanas modales
+  document.querySelectorAll("[data-close-modal]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const modal = button.closest(".modal-backdrop");
+      modal?.classList.add("hidden");
+    });
+  });
+
+  // Menú adaptable
+  document.getElementById("menuToggle")?.addEventListener("click", () => {
+    document.getElementById("mainNav")?.classList.toggle("show");
+  });
+
+  // Cargar panel si ya existe una sesión de administrador
   if (isAdmin()) {
     renderDashboard();
   }
@@ -275,7 +315,7 @@ function showSection(sectionId) {
     selectedSection.classList.add("active");
   }
 
-  document.querySelector(".navbar")?.classList.remove("show");
+  document.getElementById("mainNav")?.classList.remove("show");
 
   switch (sectionId) {
     case "productos":
